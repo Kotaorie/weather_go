@@ -111,6 +111,5 @@ func LoadFromXML(path string) ([]model.Station, error) {
 		return nil, fmt.Errorf("error unmarshalling xml: %v", err)
 	}
 	final := powerRangersTransformationXML(stationsXML)
-	fmt.Println(final[1])
 	return final, nil
 }

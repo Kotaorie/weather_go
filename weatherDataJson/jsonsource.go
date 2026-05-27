@@ -121,6 +121,5 @@ func LoadFromJSON(path string) ([]model.Station, error) {
 		return nil, fmt.Errorf("An error occurred while Unmarshal the json :  %v", err2.Error())
 	}
 	finalJSON := powerRangersTransformation(StationsJson)
-	fmt.Println(finalJSON[10])
 	return finalJSON, err
 }
