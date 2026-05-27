@@ -3,6 +3,7 @@ package model
 import "time"
 
 type Station struct {
+	Id           string
 	Country      string
 	Location     Location
 	Altitude     int

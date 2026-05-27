@@ -14,6 +14,7 @@ type Stations struct {
 }
 
 type Station struct {
+	Id          string        `json:"id"`
 	Country     string        `json:"country"`
 	Location    Location      `json:"location"`
 	Altitude    int           `json:"altitude_m"`
@@ -92,6 +93,7 @@ func powerRangersTransformation(input Stations) []model.Station {
 			})
 		}
 		result = append(result, model.Station{
+			Id:      z.Id,
 			Country: string(iso[0]) + string(iso[1]),
 			Location: model.Location{
 				Longitude: z.Location.Longitude,

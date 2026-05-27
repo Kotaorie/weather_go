@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Kotaorie/weather_go/model"
 	"github.com/Kotaorie/weather_go/weatherDataJson"
 	"github.com/Kotaorie/weather_go/weatherDataXml"
 )
@@ -43,11 +44,23 @@ func main() {
 		fmt.Println("Cohérence : FAIL")
 	}
 
-	maxStationJson, maxWindJson := MaxWindGust(jsonStations)
-	fmt.Println("Max Wind json: ", maxWindJson)
-	fmt.Println("Max Wind json: ", maxStationJson)
+	allStations := []model.Station{}
 
-	maxStation, maxWind := MaxWindGust(xmlStations)
+	allStations = append(allStations, jsonStations...)
+	allStations = append(allStations, xmlStations...)
+
+	maxStation, maxWind := MaxWindGust(allStations)
 	fmt.Println("Max Wind xml: ", maxWind)
 	fmt.Println("Max Wind xml: ", maxStation)
+
+	bordeauxStation, true := FindStationByID(allStations, "FR-BOR-001")
+	if true {
+		avgTemp := AvgTemperature(bordeauxStation)
+		fmt.Println("bordeaux Station: ", bordeauxStation)
+		fmt.Println("avg temp: ", avgTemp)
+	}
+
+	franceStation := FilterByCountry(allStations, "FR")
+	fmt.Println("france Station: ", len(franceStation))
+
 }

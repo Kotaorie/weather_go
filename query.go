@@ -57,3 +57,12 @@ func CountByCountry(stations []model.Station) map[string]int {
 	}
 	return result
 }
+
+func FindStationByID(stations []model.Station, id string) (model.Station, bool) {
+	for _, s := range stations {
+		if s.Id == id {
+			return s, true
+		}
+	}
+	return model.Station{}, false
+}

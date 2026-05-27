@@ -15,6 +15,7 @@ type Stations struct {
 }
 
 type Station struct {
+	Id           string        `xml:"id"`
 	Country      string        `xml:"country,attr"`
 	Name         string        `xml:"name"`
 	Coordinates  Coordinates   `xml:"coordinates"`
@@ -82,6 +83,7 @@ func powerRangersTransformationXML(input Stations) []model.Station {
 			})
 		}
 		result = append(result, model.Station{
+			Id:      z.Id,
 			Country: z.Country,
 			Location: model.Location{
 				Longitude: z.Coordinates.Lon,
