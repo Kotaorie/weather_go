@@ -1,0 +1,10 @@
+| Donnée               | Représentation en JSON                                                                  | Représentation en XML                                              |
+|----------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| Pays                 | `"country": "France"`                                                                   | `<station id="FR-PAR-002" country="FR">`                           |
+| Coordonnées          | `"location": { "latitude": 44.8333,"longitude": -0.7}`                                  | `<coordinates lat="45.7264" lon="4.9416" altitude="197"/>`         |
+| Altitude             | `"altitude_m": 47`                                                                      | `<coordinates lat="47.15" lon="-1.6166" altitude="27"/>`           |
+| Modèle de capteur    | `"device": {"type": "AWS-3000","manufacturer": "Vaisala","installed_on": "2015-12-09"}` | `<hardware vendor="Vaisala" model="AWS-3000" since="2015-12-09"/>` |
+| Température          | `"observations": [{"temperature_celsius": 3.3`                                          | `<measure type="temperature" unit="C">-3.3</measure>`              |
+| Conditions ciel      | `"observations": [{};{"conditions": "fog"}]`                                            | `<observation at="2026-05-24T05:00:00Z" sky="fog">`                |
+| Vent                 | `"observations": [{};{"wind": {"speed_kmh": 56.5,"direction_deg": 81},}]`               | `<wind speed="34.6" direction="64"/>`                              |
+| Notes (optionnelles) | `"observations": [{};{"notes": null}]`                                                  | `<note>Pluviomètre nettoyé en début de mois</note>`                |
