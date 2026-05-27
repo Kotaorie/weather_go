@@ -207,7 +207,8 @@
     {
       "id": "FR-PAR-002",
       "name": "Paris Montsouris",
-      "country": "France",
+      "country": "",
+
       "altitude_m": 75,
       "location": {
         "latitude": 48.8214,
