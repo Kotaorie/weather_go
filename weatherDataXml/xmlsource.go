@@ -56,27 +56,31 @@ func powerRangersTransformationXML(input Stations) []model.Station {
 	result := make([]model.Station, 0, len(input.Station))
 
 	for _, z := range input.Station {
-		if len(z.Observations) == 0 {
-			continue
-		}
-		obs := z.Observations[0]
 		t, err := time.Parse("2006-01-02", z.Hardware.Since)
 		if err != nil {
 			fmt.Println("Error parsing date:", err)
 		}
-		var temperature float32
-		var condition string
-
-		for _, m := range obs.Measures {
-			switch m.Type {
-			case "temperature":
-				v, err := strconv.ParseFloat(m.Value, 32)
-				if err == nil {
-					temperature = float32(v)
+		obs := make([]model.Observation, 0, len(z.Observations))
+		for _, o := range z.Observations {
+			var temp float32
+			for _, m := range o.Measures {
+				if m.Type == "temperature" {
+					v, err := strconv.ParseFloat(m.Value, 32)
+					if err == nil {
+						temp = float32(v)
+					}
 				}
 			}
+			obs = append(obs, model.Observation{
+				Temperature: temp,
+				Condition:   o.Sky,
+				Wind: model.Wind{
+					Speed: o.Wind.Speed,
+					Deg:   o.Wind.Direction,
+				},
+				Note: o.Note,
+			})
 		}
-		condition = obs.Sky
 		result = append(result, model.Station{
 			Country: z.Country,
 			Location: model.Location{
@@ -89,16 +93,9 @@ func powerRangersTransformationXML(input Stations) []model.Station {
 				Manufacturer: z.Hardware.Vendor,
 				InstalledOn:  t,
 			},
-			Temperature: temperature,
-			Condition:   condition,
-			Wind: model.Wind{
-				Speed: z.Observations[0].Wind.Speed,
-				Deg:   z.Observations[0].Wind.Direction,
-			},
-			Note: z.Observations[0].Note,
+			Observations: obs,
 		})
 	}
-
 	return result
 }
 

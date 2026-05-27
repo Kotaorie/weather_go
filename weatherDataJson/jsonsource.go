@@ -79,12 +79,17 @@ func countryToISO(country string) [2]rune {
 
 func powerRangersTransformation(input Stations) []model.Station {
 	result := make([]model.Station, 0, len(input.Station))
-
 	for _, z := range input.Station {
-		t, err := time.Parse("2006-01-02", z.Device.InstalledOn)
+		t, _ := time.Parse("2006-01-02", z.Device.InstalledOn)
 		iso := countryToISO(z.Country)
-		if err != nil {
-			fmt.Println("Error parsing installed time")
+		obs := make([]model.Observation, 0, len(z.Observation))
+		for _, o := range z.Observation {
+			obs = append(obs, model.Observation{
+				Temperature: o.Temperature,
+				Condition:   o.Condition,
+				Wind:        model.Wind(o.Wind),
+				Note:        o.Note,
+			})
 		}
 		result = append(result, model.Station{
 			Country: string(iso[0]) + string(iso[1]),
@@ -98,13 +103,7 @@ func powerRangersTransformation(input Stations) []model.Station {
 				Manufacturer: z.Device.Manufacturer,
 				InstalledOn:  t,
 			},
-			Temperature: z.Observation[0].Temperature,
-			Condition:   z.Observation[0].Condition,
-			Wind: model.Wind{
-				Speed: z.Observation[0].Wind.Speed,
-				Deg:   z.Observation[0].Wind.Deg,
-			},
-			Note: z.Observation[0].Note,
+			Observations: obs,
 		})
 	}
 	return result

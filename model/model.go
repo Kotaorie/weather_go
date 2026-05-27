@@ -3,10 +3,14 @@ package model
 import "time"
 
 type Station struct {
-	Country     string
-	Location    Location
-	Altitude    int
-	Device      Device
+	Country      string
+	Location     Location
+	Altitude     int
+	Device       Device
+	Observations []Observation
+}
+
+type Observation struct {
 	Temperature float32
 	Condition   string
 	Wind        Wind
