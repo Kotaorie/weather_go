@@ -5,7 +5,7 @@ import "time"
 type Station struct {
 	Country     string
 	Location    Location
-	Altitude    string
+	Altitude    int
 	Device      Device
 	Temperature float32
 	Condition   string
