@@ -25,7 +25,7 @@ type Station struct {
 
 type Observation struct {
 	Temperature float32 `json:"temperature_celsius"`
-	Condition   string  `json:"condition"`
+	Condition   string  `json:"conditions"`
 	Wind        Wind    `json:"wind"`
 	Note        *string `json:"note"`
 }
