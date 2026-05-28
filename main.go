@@ -3,22 +3,33 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
-
-	"github.com/Kotaorie/weather_go/model"
-
-	//import j3 tp
 	"net/http"
+
+	"github.com/Kotaorie/weather_go/weatherDataJson"
 )
 
 func main() {
+
+	//TP3 -------------------------------------------------------------------------------------------
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "ok")
 	})
 	http.ListenAndServe(":8080", mux)
+	fmt.Println("Listening on port 8080")
+	stations, err := weatherDataJson.LoadFromJSON("./weatherDataJson/weather_data.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	store := NewStore()
+	for _, s := range stations {
+		store.Put(s)
+	}
+	log.Printf("bootstrap : %d stations chargées", len(stations))
 
-	startJSON := time.Now()
+	//TP2 -----------------------------------------------------------------------------------------------
+
+	/* startJSON := time.Now()
 	jsonStations, err := LoadFromAuto("./weatherDataJson/weather_data.json")
 	if err != nil {
 		log.Fatal("JSON error:", err)
@@ -70,5 +81,5 @@ func main() {
 
 	franceStation := FilterByCountry(allStations, "FR")
 	fmt.Println("france Station: ", len(franceStation))
-
+	*/
 }
