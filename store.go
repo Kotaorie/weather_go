@@ -20,4 +20,10 @@ func (s *Store) Put(st model.Station) {
 
 // func (s *Store) Delete(id string) bool {}
 
-// func (s *Store) All() []model.Station {}
+func (s *Store) All() []model.Station {
+	all := make([]model.Station, 0, len(s.stations))
+	for _, st := range s.stations {
+		all = append(all, st)
+	}
+	return all
+}

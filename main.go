@@ -11,20 +11,24 @@ import (
 func main() {
 
 	//TP3 -------------------------------------------------------------------------------------------
+	store := NewStore()
+	stations, err := weatherDataJson.LoadFromJSON("./weatherDataJson/weather_data.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, s := range stations {
+		store.Put(s)
+	}
+
+	app := &App{store: store}
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /stations", app.listStations)
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "ok")
 	})
 	http.ListenAndServe(":8080", mux)
 	fmt.Println("Listening on port 8080")
-	stations, err := weatherDataJson.LoadFromJSON("./weatherDataJson/weather_data.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	store := NewStore()
-	for _, s := range stations {
-		store.Put(s)
-	}
+
 	log.Printf("bootstrap : %d stations chargées", len(stations))
 
 	//TP2 -----------------------------------------------------------------------------------------------
