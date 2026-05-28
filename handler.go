@@ -10,13 +10,6 @@ import (
 
 type App struct{ store *Store }
 
-type TransportJSON struct {
-	Id          string `json:"id"`
-	Name        string `json:"name"`
-	CountryCode string `json:"country_code"`
-	Altitude    int    `json:"altitude"`
-}
-
 func writeJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
@@ -46,18 +39,12 @@ func (a *App) getStation(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) createStation(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
-	var dto TransportJSON
+	var st model.Station
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
-	if err := dec.Decode(&dto); err != nil {
+	if err := dec.Decode(&st); err != nil {
 		writeError(w, 400, "JSON invalide: "+err.Error())
 		return
-	}
-	st := model.Station{
-		Id:       dto.Id,
-		Name:     dto.Name,
-		Country:  dto.CountryCode,
-		Altitude: dto.Altitude,
 	}
 	if st.Id == "" {
 		writeError(w, 400, "id manquant")
@@ -68,6 +55,5 @@ func (a *App) createStation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.store.Put(st)
-
 	writeJSON(w, 201, st)
 }
