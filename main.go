@@ -22,6 +22,7 @@ func main() {
 
 	app := &App{store: store}
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /stations/{id}", app.getStation)
 	mux.HandleFunc("GET /stations", app.listStations)
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "ok")

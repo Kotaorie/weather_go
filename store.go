@@ -16,7 +16,14 @@ func (s *Store) Put(st model.Station) {
 
 // func (s *Store) Has(id string) bool {}
 
-// func (s *Store) Get(id string) (model.Station, bool) {}
+func (s *Store) Get(id string) (model.Station, bool) {
+	for _, st := range s.stations {
+		if st.Id == id {
+			return st, true
+		}
+	}
+	return model.Station{}, false
+}
 
 // func (s *Store) Delete(id string) bool {}
 
