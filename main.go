@@ -6,10 +6,17 @@ import (
 	"time"
 
 	"github.com/Kotaorie/weather_go/model"
+
+	//import j3 tp
+	"net/http"
 )
 
 func main() {
-	fmt.Println("Welcome to Weather!")
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "ok")
+	})
+	http.ListenAndServe(":8080", mux)
 
 	startJSON := time.Now()
 	jsonStations, err := LoadFromAuto("./weatherDataJson/weather_data.json")
