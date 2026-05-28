@@ -23,7 +23,9 @@ func main() {
 	app := &App{store: store}
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /stations", app.createStation)
+	mux.HandleFunc("GET /stations/{id}/observations", app.listObservations)
 	mux.HandleFunc("PUT /stations/{id}", app.updateStation)
+	mux.HandleFunc("DELETE /stations/{id}", app.deleteStation)
 	mux.HandleFunc("GET /stations/{id}", app.getStation)
 	mux.HandleFunc("GET /stations", app.listStations)
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {

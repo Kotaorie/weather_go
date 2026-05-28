@@ -28,12 +28,18 @@ func (s *Store) Get(id string) (model.Station, bool) {
 	return model.Station{}, false
 }
 
-// func (s *Store) Delete(id string) bool {}
-
 func (s *Store) All() []model.Station {
 	all := make([]model.Station, 0, len(s.stations))
 	for _, st := range s.stations {
 		all = append(all, st)
 	}
 	return all
+}
+
+func (s *Store) Delete(id string) bool {
+	if _, ok := s.stations[id]; !ok {
+		return false
+	}
+	delete(s.stations, id)
+	return true
 }
