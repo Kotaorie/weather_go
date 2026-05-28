@@ -4,6 +4,7 @@ import "time"
 
 type Station struct {
 	Id           string
+	Name         string
 	Country      string
 	Location     Location
 	Altitude     int

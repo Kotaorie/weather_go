@@ -14,7 +14,10 @@ func (s *Store) Put(st model.Station) {
 	s.stations[st.Id] = st
 }
 
-// func (s *Store) Has(id string) bool {}
+func (s *Store) Has(id string) bool {
+	_, ok := s.stations[id]
+	return ok
+}
 
 func (s *Store) Get(id string) (model.Station, bool) {
 	for _, st := range s.stations {

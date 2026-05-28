@@ -15,6 +15,7 @@ type Stations struct {
 
 type Station struct {
 	Id          string        `json:"id"`
+	Name        string        `json:"name"`
 	Country     string        `json:"country"`
 	Location    Location      `json:"location"`
 	Altitude    int           `json:"altitude_m"`
